@@ -7,6 +7,7 @@ const retrieveBoardBtn = container.querySelector(".btn--retrieve-board");
 displayNotes(); //automatically displays notes on load
 
 retrieveBoardBtn.addEventListener('click', () => displayNotes());
+addNoteBtn.addEventListener('click', () => addNote());
 
 //get notes from local storage, return empty array if none
 function getNotes() {
@@ -30,7 +31,6 @@ function displayNotes() {
   })
 }
 
-
 //create note element
 function createNoteElement(id, titleContent, bodyContent) {
   const noteContainer = document.createElement("div");
@@ -52,10 +52,10 @@ function createNoteElement(id, titleContent, bodyContent) {
 //add note to html
 function addNote() {
   //get all notes
-  const allNotes = getBoard();
+  const allNotes = getNotes();
 
   //create new note element
-  newNoteObj = {
+  const newNoteObj = {
     id: Math.floor(Math.random() * 10000),
     title: "",
     body: ""
