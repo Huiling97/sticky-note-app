@@ -1,4 +1,5 @@
 const container = document.getElementById("app");
+const displayNotesContainer = container.querySelector(".note-container");
 const searchBox = document.getElementById("search");
 const addNoteBtn = container.querySelector(".btn--add-note");
 const retrieveBoardBtn = container.querySelector(".btn--retrieve-board");
@@ -19,4 +20,44 @@ function displayNotes() {
   const allNotes = getNotes();
 
   //create note element, insert each into html
+}
+
+
+//create note element
+function createNoteElement(id, titleContent, bodyContent) {
+  const noteContainer = document.createElement("div");
+  const noteTitle = document.createElement("input");
+  const noteBody = document.createElement("textarea");
+
+  noteContainer.classList.add("note");
+  noteContainer.append(noteTitle, noteBody);
+
+  noteTitle.value = titleContent;
+  noteTitle.placeholder = "Your title";
+
+  noteBody.value = bodyContent;
+  noteBody.placeholder = "Your Content";
+
+  return noteContainer;
+}
+
+//add note to html
+function addNote() {
+  //get all notes
+  const allNotes = getBoard();
+
+  //create new note element
+  newNoteObj = {
+    id: Math.floor(Math.random() * 10000),
+    title: "",
+    body: ""
+  };
+  const newNote = createNoteElement(newNoteObj.id, newNoteObj.title, newNoteObj.body);
+
+  //add new note element into html
+  displayNotesContainer.insertAdjacentElement('beforeend', newNote);
+
+  //add and save new note object to all notes
+  allNotes.push(newNoteObj);
+  saveNotes(allNotes);
 }
