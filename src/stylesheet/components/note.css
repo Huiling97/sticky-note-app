@@ -1,0 +1,28 @@
+.note-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.note {
+  width: 200px;
+  height: 200px;
+  background-color: burlywood;
+  padding: 10px;
+  margin: 10px 10px 10px 0;
+  position: relative;
+  border-radius: 2px;
+}
+
+.note-title {
+  background-color: #DEB887;
+  margin: 5px 0;
+  border: none;
+  font-size: large;
+  width: 90%;
+}
+
+.note-body {
+  background-color: #DEB887;
+  border: none;
+  width: 90%;
+}
