@@ -6,8 +6,12 @@ const retrieveBoardBtn = container.querySelector(".btn--retrieve-board");
 
 displayNotes(); //automatically displays notes on load
 
-retrieveBoardBtn.addEventListener('click', () => displayNotes());
+retrieveBoardBtn.addEventListener('click', () => {
+  displayNotes();
+  searchBox.value = "";
+});
 addNoteBtn.addEventListener('click', () => addNote());
+searchBox.addEventListener('input', (e) => searchNotes(e));
 
 //get notes from local storage, return empty array if none
 function getNotes() {
@@ -20,15 +24,33 @@ function saveNotes(notes) {
 }
 
 //display notes
-function displayNotes() {
-  //get notes from local storage
-  const allNotes = getNotes();
+function displayNotes(searchedNotes) {
+  //clear board if there are noets
+  if (displayNotesContainer.firstChild != null) {
+    clearBoard();
+  }
 
+  let allNotes;
+
+  //if searching notes, return search results
+  if (searchedNotes) {
+    allNotes = searchedNotes;
+  } else {
+    //else, return all notes
+    allNotes = getNotes();
+  }
   //create note element, insert each into html
   allNotes.forEach(note => {
     const noteElement = createNoteElement(note.id, note.title, note.body);
     displayNotesContainer.insertAdjacentElement('beforeend', noteElement);
   })
+}
+
+//clear board
+function clearBoard() {
+  while (displayNotesContainer.firstChild) {
+    displayNotesContainer.removeChild(displayNotesContainer.firstChild);
+  }
 }
 
 //create note element
@@ -97,7 +119,6 @@ function updateNote(id, newTitleContent, newBodyContent) {
   saveNotes(allNotes);
 }
 
-
 //delete note
 function deleteNote(id, noteElement) {
   //get all notes
@@ -111,4 +132,23 @@ function deleteNote(id, noteElement) {
 
   //remove deleted note element from html
   displayNotesContainer.removeChild(noteElement);
+}
+
+//search notes
+function searchNotes(e) {
+  //get input
+  const searchValue = e.target.value.toLowerCase();
+
+  //check for valid input
+  if (searchValue && searchValue.trim().length > 0) {
+    //get all notes
+    const allNotes = getNotes();
+
+    //filter out the searched note and display
+    const searchedNotes = allNotes.filter(note => note.title.startsWith(searchValue) || note.body.startsWith(searchValue));
+    displayNotes(searchedNotes);
+  } else {
+    //if invalid input, display all notes
+    displayNotes();
+  }
 }
