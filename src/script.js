@@ -36,9 +36,10 @@ function createNoteElement(id, titleContent, bodyContent) {
   const noteContainer = document.createElement("div");
   const noteTitle = document.createElement("input");
   const noteBody = document.createElement("textarea");
+  const deleteBtn = document.createElement("button");
 
   noteContainer.classList.add("note");
-  noteContainer.append(noteTitle, noteBody);
+  noteContainer.append(noteTitle, noteBody, deleteBtn);
 
   noteTitle.value = titleContent;
   noteTitle.placeholder = "Your title";
@@ -46,7 +47,10 @@ function createNoteElement(id, titleContent, bodyContent) {
   noteBody.value = bodyContent;
   noteBody.placeholder = "Your Content";
 
+  deleteBtn.textContent = "Delete";
+
   noteContainer.addEventListener('change', () => updateNote(id, noteTitle.value, noteBody.value));
+  deleteBtn.addEventListener("click", () => deleteNote(id, noteContainer));
 
   return noteContainer;
 }
@@ -86,4 +90,20 @@ function updateNote(id, newTitleContent, newBodyContent) {
 
   //save notes
   saveNotes(allNotes);
+}
+
+
+//delete note
+function deleteNote(id, noteElement) {
+  //get all notes
+  const allNotes = getNotes();
+
+  //filter out all except deleted note
+  const remainingNotes = allNotes.filter(note => note.id !== id);
+
+  //save all notes
+  saveNotes(remainingNotes);
+
+  //remove deleted note element from html
+  displayNotesContainer.removeChild(noteElement);
 }
