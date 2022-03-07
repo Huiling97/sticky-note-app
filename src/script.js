@@ -145,7 +145,7 @@ function searchNotes(e) {
     const allNotes = getNotes();
 
     //filter out the searched note and display
-    const searchedNotes = allNotes.filter(note => note.title.startsWith(searchValue) || note.body.startsWith(searchValue));
+    const searchedNotes = allNotes.filter(note => note.title.toLowerCase().startsWith(searchValue) || note.body.toLowerCase().startsWith(searchValue));
     displayNotes(searchedNotes);
   } else {
     //if invalid input, display all notes
