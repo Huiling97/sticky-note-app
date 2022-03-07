@@ -43,11 +43,16 @@ function createNoteElement(id, titleContent, bodyContent) {
 
   noteTitle.value = titleContent;
   noteTitle.placeholder = "Your title";
+  noteTitle.classList.add('note-title');
 
   noteBody.value = bodyContent;
   noteBody.placeholder = "Your Content";
+  noteBody.classList.add('note-body');
+  noteBody.setAttribute('cols', 20);
+  noteBody.setAttribute('rows', 8);
 
   deleteBtn.textContent = "Delete";
+  deleteBtn.classList.add("btn-delete-note");
 
   noteContainer.addEventListener('change', () => updateNote(id, noteTitle.value, noteBody.value));
   deleteBtn.addEventListener("click", () => deleteNote(id, noteContainer));
