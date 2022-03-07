@@ -30,7 +30,6 @@ function displayNotes() {
   })
 }
 
-
 //create note element
 function createNoteElement(id, titleContent, bodyContent) {
   const noteContainer = document.createElement("div");
@@ -45,6 +44,8 @@ function createNoteElement(id, titleContent, bodyContent) {
 
   noteBody.value = bodyContent;
   noteBody.placeholder = "Your Content";
+
+  noteContainer.addEventListener('change', () => updateNote(id, noteTitle.value, noteBody.value));
 
   return noteContainer;
 }
@@ -67,5 +68,21 @@ function addNote() {
 
   //add and save new note object to all notes
   allNotes.push(newNoteObj);
+  saveNotes(allNotes);
+}
+
+//update note
+function updateNote(id, newTitleContent, newBodyContent) {
+  //get all notes
+  const allNotes = getNotes();
+
+  //filter out the note to update
+  const updatedNote = allNotes.filter(note => note.id === id)[0];
+
+  //update note with new content
+  updatedNote.title = newTitleContent;
+  updatedNote.body = newBodyContent;
+
+  //save notes
   saveNotes(allNotes);
 }
