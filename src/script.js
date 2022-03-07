@@ -4,6 +4,10 @@ const searchBox = document.getElementById("search");
 const addNoteBtn = container.querySelector(".btn--add-note");
 const retrieveBoardBtn = container.querySelector(".btn--retrieve-board");
 
+displayNotes(); //automatically displays notes on load
+
+retrieveBoardBtn.addEventListener('click', () => displayNotes());
+
 //get notes from local storage, return empty array if none
 function getNotes() {
   return JSON.parse(localStorage.getItem("stickynotes") || "[]");
@@ -20,6 +24,10 @@ function displayNotes() {
   const allNotes = getNotes();
 
   //create note element, insert each into html
+  allNotes.forEach(note => {
+    const noteElement = createNoteElement(note.id, note.title, note.body);
+    displayNotesContainer.insertAdjacentElement('beforeend', noteElement);
+  })
 }
 
 
