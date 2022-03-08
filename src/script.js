@@ -1,8 +1,8 @@
 const container = document.getElementById("app");
 const displayNotesContainer = container.querySelector(".note-container");
 const searchBox = document.getElementById("search");
-const addNoteBtn = container.querySelector(".btn--add-note");
-const retrieveBoardBtn = container.querySelector(".btn--retrieve-board");
+const addNoteBtn = document.getElementById("btn--add-note");
+const retrieveBoardBtn = document.getElementById("btn--retrieve-board");
 
 displayNotes(); //automatically displays notes on load
 
